@@ -1,5 +1,5 @@
 class TeachersController < ApplicationController
     get '/' do
-        erb :layout
+        erb :"teachers/homepage"
     end
 end
