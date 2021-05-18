@@ -5,5 +5,7 @@ if ActiveRecord::Base.connection.migration_context.needs_migration?
 end
 
 use Rack::MethodOverride
-# use xController
+use TeachersController
+use StudentsController
+use CoursesController
 run ApplicationController
