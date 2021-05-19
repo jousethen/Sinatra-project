@@ -5,3 +5,7 @@ form {
 button {
   text-align: center;
 }
+
+.error {
+  color: red;
+}

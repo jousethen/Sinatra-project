@@ -9,6 +9,7 @@ class TeachersController < ApplicationController
   end
 
   get '/login' do
+    @session = session
     if session[:user_id]
       redirect '/index'
     else
@@ -17,6 +18,7 @@ class TeachersController < ApplicationController
   end
 
   get '/signup' do
+    @session = session
     if session[:user_id]
       redirect '/index'
     else
@@ -36,13 +38,14 @@ class TeachersController < ApplicationController
   end
 
   post '/signup' do
-    teacher = Teacher.find_by(id: params[:id])
+    teacher = Teacher.find_by(email: params[[teacher][email]])
     
-    if teacher && teacher.authenticate(params[:password])
-      session[:user_id] = teacher.id
-      redirect '/index'
-    else
+    if teacher 
+      session[:error_message] = "User already exists. Please login to continue"
       redirect '/login'
+    else
+      teacher = Teacher.create(params[teacher])
+      session[:user_id] = teacher.id
     end
   end
 

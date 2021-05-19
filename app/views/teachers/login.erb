@@ -1,5 +1,6 @@
 <h2>Login</h2>
 <form action="/login" method="POST">
+  <p class="error"><%=@session[:error_message]%></p>
   <input type="text" name="email" placeholder="Email" required><br><br>
   <input type="password" name="password" placeholder="Password" required><br><br>
 
