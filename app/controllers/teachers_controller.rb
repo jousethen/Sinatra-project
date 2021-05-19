@@ -1,4 +1,5 @@
 class TeachersController < ApplicationController
+
   get '/' do
     if session[:user_id]
       erb :"teachers/index"
@@ -9,7 +10,7 @@ class TeachersController < ApplicationController
 
   get '/login' do
     if session[:user_id]
-      erb :"teachers/index"
+      redirect '/index'
     else
       erb :"teachers/login"
     end 
@@ -17,8 +18,8 @@ class TeachersController < ApplicationController
   end
 
   post '/login' do
-    teacher = Teacher.find(params[:id])
-    binding.pry
+    teacher = Teacher.find_by(id: params[:id])
+    
     if teacher && teacher.authenticate(params[:password])
       session[:user_id] = teacher.id
       redirect '/index'
