@@ -1,9 +1,11 @@
+require 'rack-flash'
+
 class TeachersController < ApplicationController
 
+use Rack::Flash
 
   get '/' do
-    session.delete(:error_message)
-    @session = session
+    # session.delete(:user_id)
 
     if session[:user_id]
       erb :"teachers/index"
@@ -13,7 +15,6 @@ class TeachersController < ApplicationController
   end
 
   get '/login' do
-    @session = session
     if session[:user_id]
       redirect '/index'
     else
@@ -22,7 +23,6 @@ class TeachersController < ApplicationController
   end
 
   get '/signup' do
-    @session = session
     if session[:user_id]
       redirect '/index'
     else
@@ -34,26 +34,29 @@ class TeachersController < ApplicationController
     teacher = Teacher.find_by(email: params[:email])
     
     if teacher && teacher.authenticate(params[:password])
-      session[:error_message].delete
       session[:user_id] = teacher.id
       redirect '/index'
     else
-      session[:error_message] = "Error authenticating user."
-      @session = session
+      flash[:message] = "Error authenticating user."
       redirect '/login'
     end
   end
 
   post '/signup' do
-    teacher = Teacher.find_by(email: params[[teacher][email]])
+    teacher = Teacher.find_by(email: params["teacher"]["email"])
     
+    if params["teacher"]["password"] != params["c_password"]
+      flash[:message] = "Passwords do not match."
+      redirect '/signup'
+    end
+
     if teacher 
-      session[:error_message] = "User already exists. Please login to continue"
+      flash[:message] = "User already exists. Please login to continue"
       redirect '/login'
     else
-      session[:error_message].delete
-      teacher = Teacher.create(params[teacher])
+      teacher = Teacher.create(params["teacher"])
       session[:user_id] = teacher.id
+      redirect '/'
     end
   end
 
