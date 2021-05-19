@@ -1,6 +1,10 @@
 class TeachersController < ApplicationController
 
+
   get '/' do
+    session.delete(:error_message)
+    @session = session
+
     if session[:user_id]
       erb :"teachers/index"
     else
@@ -30,9 +34,12 @@ class TeachersController < ApplicationController
     teacher = Teacher.find_by(email: params[:email])
     
     if teacher && teacher.authenticate(params[:password])
+      session[:error_message].delete
       session[:user_id] = teacher.id
       redirect '/index'
     else
+      session[:error_message] = "Error authenticating user."
+      @session = session
       redirect '/login'
     end
   end
@@ -44,6 +51,7 @@ class TeachersController < ApplicationController
       session[:error_message] = "User already exists. Please login to continue"
       redirect '/login'
     else
+      session[:error_message].delete
       teacher = Teacher.create(params[teacher])
       session[:user_id] = teacher.id
     end
