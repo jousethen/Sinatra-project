@@ -14,7 +14,14 @@ class TeachersController < ApplicationController
     else
       erb :"teachers/login"
     end 
-    
+  end
+
+  get '/signup' do
+    if session[:user_id]
+      redirect '/index'
+    else
+      erb :"teachers/signup"
+    end 
   end
 
   post '/login' do
