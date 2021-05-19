@@ -25,6 +25,17 @@ class TeachersController < ApplicationController
   end
 
   post '/login' do
+    teacher = Teacher.find_by(email: params[:email])
+    
+    if teacher && teacher.authenticate(params[:password])
+      session[:user_id] = teacher.id
+      redirect '/index'
+    else
+      redirect '/login'
+    end
+  end
+
+  post '/signup' do
     teacher = Teacher.find_by(id: params[:id])
     
     if teacher && teacher.authenticate(params[:password])
