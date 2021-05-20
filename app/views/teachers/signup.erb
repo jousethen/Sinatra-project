@@ -1,8 +1,5 @@
 <h2>Registration</h2>
 <form action="/signup" method="POST">
-  <% if flash.has?(:message) %>
-    <p class="error"><%= flash[:message] %></p>
-  <% end %>
   
   <input type="text" name="teacher[name]" placeholder="Name" required><br><br>
   <input type="text" name="teacher[email]" placeholder="Email" required><br><br>

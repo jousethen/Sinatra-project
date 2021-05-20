@@ -1,8 +1,5 @@
 <h2>Login</h2>
 <form action="/login" method="POST">
-  <% if flash.has?(:message) %>
-    <p class="error"><%= flash[:message] %></p>
-  <% end %>
 
   <input type="text" name="email" placeholder="Email" required><br><br>
   <input type="password" name="password" placeholder="Password" required><br><br>

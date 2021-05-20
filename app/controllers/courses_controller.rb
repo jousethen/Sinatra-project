@@ -13,21 +13,24 @@ class CoursesController < ApplicationController
   end
 
   get '/courses/:slug' do
-    if session[:user_id]
-      @course = Course.find_by_slug(params[:slug])
+    @course = Course.find_by_slug(params[:slug])
+    
+    if session[:user_id] && @course.teacher_id == session[:user_id]
       erb :"courses/show"
     else
+      flash[:message] = "Access Denied"
       redirect "/"
     end
   end
 
   get '/courses/:slug/edit' do
-    if session[:user_id]
-      @course = Course.find_by_slug(params[:slug])
-      @students = Student.all
+    @course = Course.find_by_slug(params[:slug])
+    
+    if session[:user_id] && @course.teacher_id == session[:user_id]
       erb :"courses/edit"
     else
-      erb :"teachers/login"
+      flash[:message] = "Access Denied"
+      redirect "/"
     end
   end
 
