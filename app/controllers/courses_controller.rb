@@ -33,18 +33,21 @@ class CoursesController < ApplicationController
 
   post '/courses/new' do 
     course = Course.find_by(name: params[:course][:name])
-      if course 
-        flash[:message] = "Course Name Already Taken"
-        redirect "/courses/new"
-      else
-        course = Course.create(name: params[:course][:name], teacher_id: session[:user_id])
 
-        params[:course][:students].each do |student|
-          StudentCourse.create(student_id: student, course_id: course.id)
-        end
+    # Check if course with same name already exists
+    if course 
+      flash[:message] = "Course Name Already Taken"
+      redirect "/courses/new"
+    else
+      # create new course with students
+      course = Course.create(name: params[:course][:name], teacher_id: session[:user_id])
 
-        redirect "/courses/#{course.slug}"
+      params[:course][:students].each do |student|
+        StudentCourse.create(student_id: student, course_id: course.id)
       end
+
+      redirect "/courses/#{course.slug}"
+    end
   end
 
   patch '/courses/:slug' do

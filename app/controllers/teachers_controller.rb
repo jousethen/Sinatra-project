@@ -5,10 +5,8 @@ class TeachersController < ApplicationController
 use Rack::Flash
 
   get '/' do
-    
     if session[:user_id]
       @teacher = Teacher.find(session[:user_id])
-     #  @courses = Course.find_by(teacher_id: @teacher.id)
       erb :"teachers/index"
     else
       erb :"teachers/login"
@@ -42,6 +40,7 @@ use Rack::Flash
   post '/login' do
     teacher = Teacher.find_by(email: params[:email])
     
+    # check if teacher exists and passwords match
     if teacher && teacher.authenticate(params[:password])
       session[:user_id] = teacher.id
       redirect '/'
@@ -54,11 +53,13 @@ use Rack::Flash
   post '/signup' do
     teacher = Teacher.find_by(email: params["teacher"]["email"])
     
+    # CHeck if password and confirmation work
     if params["teacher"]["password"] != params["c_password"]
       flash[:message] = "Passwords do not match."
       redirect '/signup'
     end
 
+    # Check if teacher exists, if not, create
     if teacher 
       flash[:message] = "User already exists. Please login to continue"
       redirect '/login'
