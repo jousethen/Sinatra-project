@@ -1,5 +1,9 @@
 <h2>Edit Course</h2>
 <form action="/courses/<%=@course.slug %>" method="POST">
+  <% if flash.has?(:message) %>
+    <p class="error"><%= flash[:message] %></p>
+  <% end %>
+  
   <input id="hidden" type="hidden" name="_method" value="patch">
   <h3>Course Information</h3>
   <input type="text" name="course[name]" value="<%= @course.name %>" required><br><br>
