@@ -25,7 +25,7 @@ class CoursesController < ApplicationController
 
   get '/courses/:slug/edit' do
     @course = Course.find_by_slug(params[:slug])
-    
+    @students = Student.all
     if session[:user_id] && @course.teacher_id == session[:user_id]
       erb :"courses/edit"
     else
@@ -58,7 +58,7 @@ class CoursesController < ApplicationController
     exist = Course.find_by(name: params[:course][:name])
     if exist && exist.teacher_id != session[:user_id]
       flash[:message] = "Course name already exists. Please choose a different name."
-      redirect "/courses/#{course.slug}/edit"
+      redirect "/courses/#{params[:slug]}/edit"
     end
 
     # find currently worked on course
@@ -78,5 +78,16 @@ class CoursesController < ApplicationController
     
   end
 
-
+  delete '/courses/:slug' do
+    course = Course.find_by_slug(params[:slug])
+    
+    if session[:user_id] == course.teacher_id
+      flash[:message] = "#{course.name} Deleted"
+      course.destroy
+      redirect '/'
+    else
+      flash[:message] = "Access Denied"
+      redirect "/courses/#{params[:slug]}"
+    end
+  end
 end

@@ -15,4 +15,8 @@
   <input type="submit" value="Edit">
 </form>
 
+<form action="/courses/<%=@course.slug %>" method="POST">
+  <input id="hidden" type="hidden" name="_method" value="delete">
+  <input type="submit" value="Delete">
+</form>
 
