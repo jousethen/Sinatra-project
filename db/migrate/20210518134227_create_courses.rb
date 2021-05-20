@@ -3,6 +3,6 @@ class CreateCourses < ActiveRecord::Migration[5.2]
     create_table :courses do |t|
       t.string :name
       t.integer :teacher_id
-    end
+    end 
   end
 end
