@@ -1,5 +1,9 @@
 <h2>Course List <h2>
-
+<ul>
+  <% @courses.each do |course|%>
+    <li><a href="/courses/<%= course.slug %>"><%= course.name%> </a></li>
+  <% end%>
+</ul>
 <form action="/courses/new" method="GET">
   <input type="submit" value="Add Course">
 </form>

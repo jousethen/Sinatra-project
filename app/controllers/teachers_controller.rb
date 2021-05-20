@@ -6,6 +6,8 @@ use Rack::Flash
 
   get '/' do
     if session[:user_id]
+      @teacher = Teacher.find(session[:user_id])
+     #  @courses = Course.find_by(teacher_id: @teacher.id)
       erb :"teachers/index"
     else
       erb :"teachers/login"
