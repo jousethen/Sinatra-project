@@ -1,0 +1,17 @@
+<h2>New Course</h2>
+<form action="/courses/new" method="POST">
+  
+  <h3>Course Information</h3>
+  <input type="text" name="course[name]" placeholder="Name" required><br><br>
+
+  <h3>Student List</h3>
+  <select>
+    <% @students.each do |student| %>
+    <option value="<%=student.id %>"><%= student.name %></option>
+    <% end %>
+  </select>
+
+  <input type="submit" value="Create">
+</form>
+
+
