@@ -8,8 +8,20 @@ class CoursesController < ApplicationController
     end
   end
 
-  post '/courses/new' do
-    binding.pry
+  post '/courses/new' do 
+    course = Course.find_by(name: params[:course][:name])
+      if course 
+        redirect "/courses/#{course.slug}"
+      else
+        course = Course.create(name: params[:course][:name])
+
+        params[:course][:students].each do |student|
+          StudentCourse.create(student_id: student, course_id: course.id)
+        end
+
+        redirect "/courses/#{course.slug}"
+      end
+    
   end
 
 
