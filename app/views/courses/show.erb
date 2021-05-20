@@ -1,0 +1,15 @@
+<h2><%@course.name%><h2>
+<h3>Students<h3>
+<ul>
+  <% @course.students.each do |student|%>
+    <li><a href="/students/<%= student.id %>"><%= student.name%> </a></li>
+  <% end %>
+</ul>
+<form action="/courses/<%= @course.slug %>/edit" method="GET">
+  <input type="submit" value="Edit Course">
+</form>
+
+<form action="/students/new" method="GET">
+  <input type="submit" value="Add New Student">
+</form>
+
