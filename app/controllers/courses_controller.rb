@@ -24,6 +24,7 @@ class CoursesController < ApplicationController
   get '/courses/:slug/edit' do
     if session[:user_id]
       @course = Course.find_by_slug(params[:slug])
+      @students = Student.all
       erb :"courses/edit"
     else
       erb :"teachers/login"
@@ -43,6 +44,20 @@ class CoursesController < ApplicationController
 
         redirect "/courses/#{course.slug}"
       end
+  end
+
+  patch '/courses/:slug' do
+    course = Course.find_by_slug(params[:slug])
+
+    student_courses = []
+    
+    params[:course][:students].each do |student|
+      student_courses  << StudentCourse.create(student_id: student, course_id: course.id)
+    end
+    course.update(name: params[:course][:name], student_courses: student_courses)
+    course.save
+
+    redirect "/courses/#{course.slug}"
     
   end
 
