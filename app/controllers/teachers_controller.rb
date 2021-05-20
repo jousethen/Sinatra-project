@@ -5,8 +5,6 @@ class TeachersController < ApplicationController
 use Rack::Flash
 
   get '/' do
-    # session.delete(:user_id)
-
     if session[:user_id]
       erb :"teachers/index"
     else
@@ -16,15 +14,23 @@ use Rack::Flash
 
   get '/login' do
     if session[:user_id]
-      redirect '/index'
+      redirect '/'
     else
       erb :"teachers/login"
     end 
   end
 
+  get '/logout' do
+    if session[:user_id]
+      erb :"teachers/logout"
+    else
+      redirect "/"
+    end
+  end
+
   get '/signup' do
     if session[:user_id]
-      redirect '/index'
+      redirect '/'
     else
       erb :"teachers/signup"
     end 
@@ -35,7 +41,7 @@ use Rack::Flash
     
     if teacher && teacher.authenticate(params[:password])
       session[:user_id] = teacher.id
-      redirect '/index'
+      redirect '/'
     else
       flash[:message] = "Error authenticating user."
       redirect '/login'
@@ -58,6 +64,14 @@ use Rack::Flash
       session[:user_id] = teacher.id
       redirect '/'
     end
+  end
+
+  post '/logout' do
+    if session[:user_id]
+      session.clear
+    end
+
+    redirect "/"
   end
 
 end

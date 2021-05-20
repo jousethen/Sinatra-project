@@ -9,3 +9,8 @@ button {
 .error {
   color: red;
 }
+
+.nav {
+  float: right;
+  padding-right: 5%;
+}

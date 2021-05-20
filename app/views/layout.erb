@@ -4,7 +4,16 @@
     <link rel="stylesheet" href="/stylesheets/style.css" type="text/css"/>
   </head>
   <header>
+   
+    
     <h1>Sway School District Teacher Portal </h1>
+     <% if session[:user_id] %>
+    <div class="nav">
+      <a href="/">Home</a>
+      <a href="/logout">Logout</a>   
+    </div>
+    <% end %>
+    <br>
     <hr>
   </header>
   <body>
