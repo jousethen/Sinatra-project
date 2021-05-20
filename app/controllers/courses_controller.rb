@@ -21,6 +21,15 @@ class CoursesController < ApplicationController
     end
   end
 
+  get '/courses/:slug/edit' do
+    if session[:user_id]
+      @course = Course.find_by_slug(params[:slug])
+      erb :"courses/edit"
+    else
+      erb :"teachers/login"
+    end
+  end
+
   post '/courses/new' do 
     course = Course.find_by(name: params[:course][:name])
       if course 
