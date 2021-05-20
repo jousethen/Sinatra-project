@@ -8,5 +8,9 @@ class CoursesController < ApplicationController
     end
   end
 
+  post '/courses/new' do
+    binding.pry
+  end
+
 
 end

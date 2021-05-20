@@ -5,7 +5,7 @@
   <input type="text" name="course[name]" placeholder="Name" required><br><br>
 
   <h3>Student List</h3>
-  <select>
+  <select name="[courses][students][]" multiple> 
     <% @students.each do |student| %>
     <option value="<%=student.id %>"><%= student.name %></option>
     <% end %>
