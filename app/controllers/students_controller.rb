@@ -6,7 +6,6 @@ class StudentsController < ApplicationController
   get '/students/new' do
     if session[:user_id]
       @teacher = Teacher.find(session[:user_id])
-      @courses = @teacher.courses
       erb :"students/new"
     else
       erb :"teachers/login"
@@ -22,15 +21,15 @@ class StudentsController < ApplicationController
       redirect "/"
     end
   end
-  
+
   post '/students/new' do 
+    binding.pry
     student = Student.create(name: params[:student][:name])
 
-    params[:students][:courses].each do |course|
-      StudentCourse.create(student_id: student.id, course_id: course.id)
+    params[:student][:courses].each do |course|
+      StudentCourse.create(student_id: student.id, course_id: course)
     end
 
     redirect "/students/#{student.id}"
-    end
   end
 end
