@@ -11,12 +11,12 @@
     <option value="<%=student.id %>" <%= 'selected' if @course.students.include?(student) %> ><%= student.name %></option>
     <% end %>
   </select>
-
-  <input type="submit" value="Edit">
+  <br>
+  <input type="submit" value="Edit Course">
 </form>
 
 <form action="/courses/<%=@course.slug %>" method="POST">
   <input id="hidden" type="hidden" name="_method" value="delete">
-  <input type="submit" value="Delete">
+  <input type="submit" value="Delete Course">
 </form>
 

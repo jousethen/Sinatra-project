@@ -2,7 +2,7 @@
 <h3>Students<h3>
 <ul>
   <% @course.students.each do |student|%>
-    <li><a href="/students/<%= student.id %>"><%= student.name%> </a></li>
+    <li><a href="/students/<%= student.id %>"><%= student.name%> (<%=student.id%>) </a></li>
   <% end %>
 </ul>
 <form action="/courses/<%= @course.slug %>/edit" method="GET">

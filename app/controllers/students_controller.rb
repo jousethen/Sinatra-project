@@ -23,7 +23,6 @@ class StudentsController < ApplicationController
   end
 
   post '/students/new' do 
-    binding.pry
     student = Student.create(name: params[:student][:name])
 
     params[:student][:courses].each do |course|
