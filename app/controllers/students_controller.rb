@@ -22,7 +22,7 @@ class StudentsController < ApplicationController
       redirect "/"
     end
   end
-
+  
   post '/students/new' do 
     student = Student.create(name: params[:student][:name])
 
