@@ -1,6 +1,7 @@
 # Sinatra-Project
 
 Welcome! For this project I created a simple CMS for a Teacher/Course domain using MVC and Sinatra. 
+[Demo](https://youtu.be/l4pOLzqdBDQ)
 
 ## Getting Started
 
